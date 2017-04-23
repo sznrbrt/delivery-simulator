@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="game-layout.css"/>
+    <title>CatchMaze</title>
+    <script src="LAB.min.js"></script>
+    <script>
+
+    //Loads the scripts with the LAB script loader and calls the start() function
+        $LAB
+                .script('geom/Vector2.js').wait()
+                .script('Canvas2D.js').wait()
+                .script('Game.js').wait()
+                .script('CityMap.js').wait()
+                .script('City.js').wait()
+                .script('Restaurant.js').wait()
+                .script('SimulatorGameWorld.js').wait()
+                .script('TrafficSimulator.js').wait(function () {
+                    Game.start('mycanvas', 1000, 600);
+                });
+    </script>
+</head>
+
+<body>
+<div id = "fixedwidth">
+  <div id="canvas-container">
+    <canvas id="mycanvas" width="1000" height="600"></canvas>
+  </div>
+</div>
+</body>
+</html>

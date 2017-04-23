@@ -1,0 +1,12 @@
+#fixedwidth {
+	width:1024px;
+	margin:0 auto;
+	padding 0;
+}
+
+#mycanvas{
+	border-style: solid;
+    border-color: black;
+    margin-top: 0;
+	padding-top: 0;
+}
