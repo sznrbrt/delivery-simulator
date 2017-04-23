@@ -2,7 +2,8 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="game-layout.css"/>
-    <title>CatchMaze</title>
+    <title>Delivery simulator</title>
+    <script src="moment.js"></script>
     <script src="LAB.min.js"></script>
     <script>
 
@@ -13,7 +14,9 @@
                 .script('Game.js').wait()
                 .script('CityMap.js').wait()
                 .script('City.js').wait()
+                .script('Clock.js').wait()
                 .script('Restaurant.js').wait()
+                .script('Vehicle.js').wait()
                 .script('SimulatorGameWorld.js').wait()
                 .script('TrafficSimulator.js').wait(function () {
                     Game.start('mycanvas', 1000, 600);
@@ -24,6 +27,7 @@
 <body>
 <div id = "fixedwidth">
   <div id="canvas-container">
+    <h4>Time: <span id="time"></span></h4>
     <canvas id="mycanvas" width="1000" height="600"></canvas>
   </div>
 </div>

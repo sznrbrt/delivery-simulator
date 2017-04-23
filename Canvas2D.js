@@ -23,7 +23,7 @@ Canvas2D_Singleton.prototype.clear = function () {
     this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
 
-// drawImage() draws an image file on the specified paramteres, if those are not specified the method works with its default values 
+// drawImage() draws an image file on the specified paramteres, if those are not specified the method works with its default values
 Canvas2D_Singleton.prototype.drawImage = function (sprite, position, rotation, scale, origin) {
     position = typeof position !== 'undefined' ? position : Vector2.zero;
     rotation = typeof rotation !== 'undefined' ? rotation : 0;
