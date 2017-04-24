@@ -8,23 +8,63 @@ function Vehicle(_x, _y, resX, resY) {
   this.tasks = [];
   this.completedTasks = [];
   this.followedPath = [];
+  this.simulatedTaskTime = 0;
 }
 
 Vehicle.prototype.update = function (delta) {
+  // If there is simulatedTaskTime then wait
+  if(this.simulatedTaskTime > 0) {
+    this.simulatedTaskTime -= 1;
+    return;
+  }
+
   // Check if there is a task - if so, check if route is available -> IF NOT GET SHORTEST PATH
-  if(this.tasks.length > 0 && this.tasks[0].route.length === 0) {
-    this.tasks[0].route = this.getShortestPath(this.tasks[0].start, this.tasks[0].end);
+  if(this.tasks.length > 0 && this.tasks[0].route && this.tasks[0].route.length > 0) {
+    this.tasks[0].route = this.getShortestPath(this.position, this.tasks[0].deliveryTo);
+    this.followedPath = this.getShortestPath(this.position, this.tasks[0].deliveryTo);;
   }
 
   // Check if there is a task if so do, if not, go home
   if(this.tasks.length > 0) {
-
     // Movement for the task
+    // Check if reached destination - if so, return
+    if(this.canvasPosition.x === this.tasks[0].deliveryTo.x * 40 &&
+       this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
+         this.completedTasks.push(this.tasks[0]);
+         this.tasks.shift();
+         this.simulatedTaskTime = 100;
+      return;
+    }
+
+    var path = this.followedPath.length === 0 ? this.getShortestPath(this.position, this.tasks[0].deliveryTo).slice(1) : this.followedPath;
+    var targetX = path[0][0];
+    var targetY = path[0][1];
+
+    // If equals to current pos, node reached
+    if(targetX * 40 === this.canvasPosition.x && targetY * 40 === this.canvasPosition.y) {
+      this.position = new Vector2(targetX, targetY);
+      if(this.followedPath.length === 1) return;
+      this.followedPath.shift(); // If reached get next target
+    } else {
+      // Not equals
+      // If X not equals move horizontally, else vertically
+      if(targetX * 40 !== this.canvasPosition.x) {
+        //Move horizontally
+        if((targetX * 40 - this.canvasPosition.x) < 0) this.canvasPosition.x -= this.speed;
+        else this.canvasPosition.x += this.speed;
+      } else if(targetY * 40 !== this.canvasPosition.y) {
+        //Move vertically
+        if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += this.speed;
+        else this.canvasPosition.y -= this.speed;
+      } else {
+        console.log('WHERE?');
+      }
+    }
+
   } else {
     // Check if home - if so, return
-    if(this.canvasPosition.x * 40 === this.restaurantPickupPosition.x * 40 &&
-       this.canvasPosition.y * 40 === this.restaurantPickupPosition.y * 40 ) {
-
+    if(this.canvasPosition.x === this.restaurantPickupPosition.x &&
+       this.canvasPosition.y === this.restaurantPickupPosition.y ) {
       console.log('HOME');
       return;
     }
@@ -38,7 +78,8 @@ Vehicle.prototype.update = function (delta) {
 
     // If equals to current pos, node reached
     if(targetX * 40 === this.canvasPosition.x && targetY * 40 === this.canvasPosition.y) {
-      if(this.followedPath.length === 1) return;
+      this.position = new Vector2(targetX, targetY);
+      if(this.followedPath.length === 1) return this.followedPath = [];
       this.followedPath.shift(); // If reached get next target
     } else {
       // Not equals

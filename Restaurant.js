@@ -7,7 +7,7 @@ function Restaurant(x, y) {
   this.openOrders = [];
   this.waitingOrders = [];
   this.closedOrders = [];
-  this.vehicle = new Vehicle(3, 2, this.pickupPosition.x, this.pickupPosition.y);
+  this.vehicle = new Vehicle(22, 2, this.pickupPosition.x, this.pickupPosition.y);
 }
 
 Restaurant.prototype.update = function (delta) {
@@ -16,13 +16,9 @@ Restaurant.prototype.update = function (delta) {
     this.openOrders = [];
   }
 
-
-  // console.log(this.pickupPosition);
-  // console.log(this.vehicle.position);
-  // console.log(this.vehicle.position.equals(this.pickupPosition));
   if(this.waitingOrders.length > 0 && this.vehicle.position.equals(this.pickupPosition)) {
     this.vehicle.assignTask(this.waitingOrders[0]);
-    this.waitingOrders.shift()
+    this.waitingOrders.shift();
   }
 
   this.vehicle.update();

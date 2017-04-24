@@ -6,6 +6,7 @@ function SimulatorGameWorld() {
   this.city = new City();
   this.restaurant = new Restaurant(24, 5);
   this.clock = new Clock(23, 6);
+  this.orderQueue = [{ time: this.time, deliveryTo: { x: 5, y: 2 }, id: 1 }];
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -16,9 +17,9 @@ SimulatorGameWorld.prototype.handleInput = function (delta) {
 SimulatorGameWorld.prototype.update = function (delta) {
   this.time += ((1000 / 60) / 1000);
 
-  if(Math.round(this.time) === 5) {
-    var openOrderIDs = this.restaurant.openOrders.map((e) => e.id);
-    openOrderIDs.indexOf(1) === -1 ? this.restaurant.addOrder({ time: this.time, deliveryTo: { x: 5, y: 2 }, id: 1 }) : null;
+  if(Math.floor(this.time) === 5 && this.orderQueue.length > 0) {
+    this.restaurant.addOrder(this.orderQueue[0]);
+    this.orderQueue.shift();
   }
 
   this.restaurant.update();
