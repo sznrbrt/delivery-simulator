@@ -37,8 +37,8 @@ City.prototype.drawMap = function () {
       Canvas2D.canvasContext.fillRect(position.x, position.y, 40, 40);
     }
     if(e === 'P') {
-      Canvas2D.canvasContext.fillStyle = "red";
-      Canvas2D.canvasContext.fillRect(position.x, position.y, 40, 40);
+      // Canvas2D.canvasContext.fillStyle = "red";
+      // Canvas2D.canvasContext.fillRect(position.x, position.y, 40, 40);
     }
   });
 };

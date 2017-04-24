@@ -1,0 +1,20 @@
+{
+  "name": "traffic-simulation",
+  "homepage": "https://github.com/sznrbrt/delivery-simulator",
+  "authors": [
+    "Norbert Szucs <szucs.norbert@outlook.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pathfinding": "^0.4.18"
+  }
+}
