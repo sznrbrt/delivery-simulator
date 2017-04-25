@@ -37,5 +37,6 @@ Restaurant.prototype.draw = function () {
 };
 
 Restaurant.prototype.addOrder = function (data) {
-  this.openOrders.push(data);
+  console.log(data);
+  this.openOrders = this.openOrders.concat([data]);
 };

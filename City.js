@@ -35,6 +35,10 @@ City.prototype.drawMap = function () {
     if(e === 'R') {
       Canvas2D.canvasContext.fillStyle = "grey";
       Canvas2D.canvasContext.fillRect(position.x, position.y, 40, 40);
+      // Print coordinates on top of road
+      // Canvas2D.canvasContext.font="10px Georgia";
+      // Canvas2D.canvasContext.fillStyle="white";
+      // Canvas2D.canvasContext.fillText(getCoordinates(i).x + ', ' + getCoordinates(i).y, position.x, position.y + 10);
     }
     if(e === 'P') {
       // Canvas2D.canvasContext.fillStyle = "red";

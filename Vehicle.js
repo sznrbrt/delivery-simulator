@@ -128,7 +128,7 @@ Vehicle.prototype.getShortestPath = function (a, b) {
   var start = getMapIndex(a);
   var goal = getMapIndex(b);
 
-  var finder = new PF.AStarFinder();
+  var finder = new PF.BestFirstFinder({ allowDiagonal: false });
   var grid = cityGrid.clone();
   var path = finder.findPath(a.x, a.y, b.x, b.y, grid);
 
