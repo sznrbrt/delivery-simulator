@@ -17,6 +17,7 @@ Restaurant.prototype.update = function (delta) {
   }
 
   if(this.waitingOrders.length > 0 && this.vehicle.position.equals(this.pickupPosition)) {
+    this.vehicle.simulatedTaskTime = 100;
     this.vehicle.assignTask(this.waitingOrders[0]);
     this.waitingOrders.shift();
   }
