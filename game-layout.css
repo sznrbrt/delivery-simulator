@@ -21,3 +21,17 @@ body {
   margin-top: 0;
 	padding-top: 0;
 }
+
+.heading-container {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+}
+
+.heading-container>div:first-of-type {
+	margin-left: 0px;
+}
+
+.heading-container>div {
+	margin-left: 20px;
+}

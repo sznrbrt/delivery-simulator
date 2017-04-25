@@ -4,9 +4,9 @@
 function SimulatorGameWorld() {
   this.time = 0;
   this.city = new City();
-  this.restaurant = new Restaurant(24, 5);
+  this.restaurants = [new Restaurant(24, 5, 23, 5, 22, 2, 'red'), new Restaurant(2, 3, 3, 3, 10, 2, 'blue')];
   this.clock = new Clock(23, 6);
-  this.orderQueue = [{ time: 5, deliveryTo: { x: 5, y: 2 }, id: 1 }, { time: 10, deliveryTo: { x: 4, y: 2 }, id: 2 }];
+  this.orderQueue = orderData;
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -20,19 +20,20 @@ SimulatorGameWorld.prototype.update = function (delta) {
   if(this.orderQueue.length > 0) {
     this.orderQueue.forEach((obj) => {
       if(Math.floor(this.time) === obj.time) {
-        console.log('ORDER');
-        this.restaurant.addOrder(obj);
+        var randomRestaurantIndex = Math.floor(Math.random()*this.restaurants.length);
+        this.restaurants[randomRestaurantIndex].addOrder(obj);
+        document.getElementById('processedOrderMeter').innerHTML = parseInt(document.getElementById('processedOrderMeter').innerHTML) + 1;
         this.orderQueue.shift();
       }
     })
   }
 
-  this.restaurant.update();
+  this.restaurants.forEach((restaurant) => restaurant.update());
 };
 
 // Draw method for SimulatorGameWorld
 SimulatorGameWorld.prototype.draw = function () {
   this.clock.draw(this.time);
   this.city.draw();
-  this.restaurant.draw();
+  this.restaurants.forEach((restaurant) => restaurant.draw());
 };

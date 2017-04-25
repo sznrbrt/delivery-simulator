@@ -13,6 +13,7 @@
                 .script('Canvas2D.js').wait()
                 .script('Game.js').wait()
                 .script('CityMap.js').wait()
+                .script('orderData.js').wait()
                 .script('City.js').wait()
                 .script('Clock.js').wait()
                 .script('Restaurant.js').wait()
@@ -25,9 +26,22 @@
 </head>
 
 <body>
-<div id = "fixedwidth">
+<div id="fixedwidth">
+  <div class="heading-container">
+    <div>
+      <h4>Time: <span id="time"></span></h4>
+    </div>
+    <div>
+      <h4># of completedTasks: <span id="completedTasksMeter">0</span></h4>
+    </div>
+    <div>
+      <h4># of processedOrders: <span id="processedOrderMeter">0</span></h4>
+    </div>
+    <div>
+      <h4># of riderDistanceUnits: <span id="distanceUnitMeter">0</span></h4>
+    </div>
+  </div>
   <div id="canvas-container">
-    <h4>Time: <span id="time"></span></h4>
     <canvas id="mycanvas" width="1000" height="600"></canvas>
   </div>
 </div>

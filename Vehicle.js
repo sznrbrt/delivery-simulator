@@ -1,6 +1,7 @@
 "use strict";
 
-function Vehicle(_x, _y, resX, resY) {
+function Vehicle(_x, _y, resX, resY, color) {
+  this.color = color;
   this.position = new Vector2(_x, _y);
   this.canvasPosition = new Vector2(_x * 40, _y * 40);
   this.restaurantPickupPosition = { x: resX, y: resY };
@@ -32,6 +33,7 @@ Vehicle.prototype.update = function (delta) {
        this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
          this.completedTasks.push(this.tasks[0]);
          this.tasks.shift();
+         document.getElementById('completedTasksMeter').innerHTML = parseInt(document.getElementById('completedTasksMeter').innerHTML) + 1;
          this.simulatedTaskTime = 100;
       return;
     }
@@ -45,6 +47,7 @@ Vehicle.prototype.update = function (delta) {
       this.position = new Vector2(targetX, targetY);
       if(this.followedPath.length === 1) return;
       this.followedPath.shift(); // If reached get next target
+      document.getElementById('distanceUnitMeter').innerHTML = parseInt(document.getElementById('distanceUnitMeter').innerHTML) + 1;
     } else {
       // Not equals
       // If X not equals move horizontally, else vertically
@@ -65,12 +68,10 @@ Vehicle.prototype.update = function (delta) {
     // Check if home - if so, return
     if(this.canvasPosition.x === this.restaurantPickupPosition.x &&
        this.canvasPosition.y === this.restaurantPickupPosition.y ) {
-      console.log('HOME');
       return;
     }
     // Movement for going home
     var path = this.followedPath.length === 0 ? this.getShortestPath(this.position, this.restaurantPickupPosition) : this.followedPath;
-
     this.followedPath.length === 0 ? this.followedPath = path : null;
 
     var targetX = path[0][0];
@@ -81,13 +82,14 @@ Vehicle.prototype.update = function (delta) {
       this.position = new Vector2(targetX, targetY);
       if(this.followedPath.length === 1) return this.followedPath = [];
       this.followedPath.shift(); // If reached get next target
+      document.getElementById('distanceUnitMeter').innerHTML = parseInt(document.getElementById('distanceUnitMeter').innerHTML) + 1;
     } else {
       // Not equals
       // If X not equals move horizontally, else vertically
       if(targetX * 40 !== this.canvasPosition.x) {
         //Move horizontally
-        if(targetX * 40 - this.canvasPosition.X > 0) this.canvasPosition.x -= this.speed;
-        else this.canvasPosition.x += this.speed;
+        if(targetX * 40 - this.canvasPosition.x > 0) this.canvasPosition.x += this.speed;
+        else this.canvasPosition.x -= this.speed;
       } else if(targetY * 40 !== this.canvasPosition.y) {
         //Move vertically
         if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += this.speed;
@@ -102,8 +104,11 @@ Vehicle.prototype.update = function (delta) {
 Vehicle.prototype.draw = function () {
   // console.log(this.position);
   // console.log(this.canvasPosition);
-  Canvas2D.canvasContext.fillStyle = "red";
-  Canvas2D.canvasContext.fillRect(this.canvasPosition.x + 15, this.canvasPosition.y + 15, 10, 10);
+  Canvas2D.canvasContext.fillStyle = this.color;
+  Canvas2D.canvasContext.fillRect(this.canvasPosition.x + 10, this.canvasPosition.y + 10, 20, 20);
+  Canvas2D.canvasContext.font="14px Georgia";
+  Canvas2D.canvasContext.fillStyle="white";
+  Canvas2D.canvasContext.fillText(this.tasks.length, this.canvasPosition.x + 15, this.canvasPosition.y + 22.5);
 };
 
 Vehicle.prototype.assignTask = function (data) {

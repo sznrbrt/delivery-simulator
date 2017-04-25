@@ -1,13 +1,14 @@
 "use strict";
 
-function Restaurant(x, y) {
+function Restaurant(x, y, pickupX, pickupY, vehicleInitialX, vehicleInitialY, color) {
+  this.color = color;
   this.position = new Vector2(x, y);
-  this.pickupPosition = new Vector2(x - 1, y);
+  this.pickupPosition = new Vector2(pickupX, pickupY);
   this.canvasPosition = new Vector2(x * 40, y * 40);
   this.openOrders = [];
   this.waitingOrders = [];
   this.closedOrders = [];
-  this.vehicle = new Vehicle(22, 2, this.pickupPosition.x, this.pickupPosition.y);
+  this.vehicle = new Vehicle(vehicleInitialX, vehicleInitialY, pickupX, pickupY, color);
 }
 
 Restaurant.prototype.update = function (delta) {
@@ -26,7 +27,7 @@ Restaurant.prototype.update = function (delta) {
 };
 
 Restaurant.prototype.draw = function () {
-  Canvas2D.canvasContext.fillStyle = "red";
+  Canvas2D.canvasContext.fillStyle = this.color;
   Canvas2D.canvasContext.fillRect(this.canvasPosition.x, this.canvasPosition.y, 40, 40);
   Canvas2D.canvasContext.font="14px Georgia";
   Canvas2D.canvasContext.fillStyle="white";
