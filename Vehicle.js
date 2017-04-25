@@ -39,6 +39,16 @@ Vehicle.prototype.update = function (delta) {
     }
 
     var path = this.followedPath.length === 0 ? this.getShortestPath(this.position, this.tasks[0].deliveryTo).slice(1) : this.followedPath;
+
+    if(path.length === 0) {
+      // Avoid error if next deliveryTarget is the same
+      this.completedTasks.push(this.tasks[0]);
+      document.getElementById('completedTasksMeter').innerHTML = parseInt(document.getElementById('completedTasksMeter').innerHTML) + 1;
+      this.simulatedTaskTime = 50;
+      this.tasks.shift();
+      return;
+    }
+
     var targetX = path[0][0];
     var targetY = path[0][1];
 
@@ -76,7 +86,6 @@ Vehicle.prototype.update = function (delta) {
 
     var targetX = path[0][0];
     var targetY = path[0][1];
-
     // If equals to current pos, node reached
     if(targetX * 40 === this.canvasPosition.x && targetY * 40 === this.canvasPosition.y) {
       this.position = new Vector2(targetX, targetY);
