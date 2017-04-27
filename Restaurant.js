@@ -1,6 +1,6 @@
 "use strict";
 
-function Restaurant(x, y, pickupX, pickupY, vehicleInitialX, vehicleInitialY, color) {
+function Restaurant(x, y, pickupX, pickupY, vehicleInitialX, vehicleInitialY, color, numOfVehicle) {
   this.color = color;
   this.position = new Vector2(x, y);
   this.pickupPosition = new Vector2(pickupX, pickupY);
@@ -8,7 +8,11 @@ function Restaurant(x, y, pickupX, pickupY, vehicleInitialX, vehicleInitialY, co
   this.openOrders = [];
   this.waitingOrders = [];
   this.closedOrders = [];
-  this.vehicle = new Vehicle(vehicleInitialX, vehicleInitialY, pickupX, pickupY, color);
+  this.vehicles = [];
+
+  for(let i = 0; i < numOfVehicle; i++) {
+    this.vehicles.push(new Vehicle(vehicleInitialX, vehicleInitialY, pickupX, pickupY, color));
+  }
 }
 
 Restaurant.prototype.update = function (delta) {
@@ -17,13 +21,15 @@ Restaurant.prototype.update = function (delta) {
     this.openOrders = [];
   }
 
-  if(this.waitingOrders.length > 0 && this.vehicle.position.equals(this.pickupPosition)) {
-    this.vehicle.simulatedTaskTime = 100;
-    this.vehicle.assignTask(this.waitingOrders[0]);
-    this.waitingOrders.shift();
-  }
+  this.vehicles.forEach((vehicle) => {
+    if(this.waitingOrders.length > 0 && vehicle.position.equals(this.pickupPosition)) {
+      vehicle.simulatedTaskTime = 100;
+      vehicle.assignTask(this.waitingOrders[0]);
+      this.waitingOrders.shift();
+    }
 
-  this.vehicle.update();
+    vehicle.update();
+  })
 };
 
 Restaurant.prototype.draw = function () {
@@ -33,7 +39,9 @@ Restaurant.prototype.draw = function () {
   Canvas2D.canvasContext.fillStyle="white";
   Canvas2D.canvasContext.fillText(this.waitingOrders.length, this.canvasPosition.x + 15, this.canvasPosition.y + 25);
 
-  this.vehicle.draw();
+  this.vehicles.forEach((vehicle) => {
+    vehicle.draw();
+  })
 };
 
 Restaurant.prototype.addOrder = function (data) {

@@ -63,11 +63,11 @@ Vehicle.prototype.update = function (delta) {
       // If X not equals move horizontally, else vertically
       if(targetX * 40 !== this.canvasPosition.x) {
         //Move horizontally
-        if((targetX * 40 - this.canvasPosition.x) < 0) this.canvasPosition.x -= this.speed;
+        if((targetX * 40 - this.canvasPosition.x) < 0) this.canvasPosition.x -= (this.speed * Game.gameWorld.multiplier);
         else this.canvasPosition.x += this.speed;
       } else if(targetY * 40 !== this.canvasPosition.y) {
         //Move vertically
-        if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += this.speed;
+        if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += (this.speed * Game.gameWorld.multiplier);
         else this.canvasPosition.y -= this.speed;
       } else {
         console.log('WHERE?');
