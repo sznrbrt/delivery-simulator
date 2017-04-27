@@ -13,7 +13,7 @@ function Restaurant(x, y, pickupX, pickupY, vehicleInitialX, vehicleInitialY, co
 
 Restaurant.prototype.update = function (delta) {
   if(this.openOrders.length > 0) {
-    this.waitingOrders = this.openOrders;
+    this.waitingOrders = this.waitingOrders.concat(this.openOrders);
     this.openOrders = [];
   }
 
@@ -37,6 +37,6 @@ Restaurant.prototype.draw = function () {
 };
 
 Restaurant.prototype.addOrder = function (data) {
-  console.log(data);
+  // console.log(data);
   this.openOrders = this.openOrders.concat([data]);
 };

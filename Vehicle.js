@@ -20,7 +20,7 @@ Vehicle.prototype.update = function (delta) {
   }
 
   // Check if there is a task - if so, check if route is available -> IF NOT GET SHORTEST PATH
-  if(this.tasks.length > 0 && this.tasks[0].route && this.tasks[0].route.length > 0) {
+  if(this.tasks.length > 0 && this.tasks[0] && this.tasks[0].route && this.tasks[0].route.length > 0) {
     this.tasks[0].route = this.getShortestPath(this.position, this.tasks[0].deliveryTo);
     this.followedPath = this.getShortestPath(this.position, this.tasks[0].deliveryTo);;
   }
@@ -114,10 +114,16 @@ Vehicle.prototype.draw = function () {
   // console.log(this.position);
   // console.log(this.canvasPosition);
   Canvas2D.canvasContext.fillStyle = this.color;
-  Canvas2D.canvasContext.fillRect(this.canvasPosition.x + 10, this.canvasPosition.y + 10, 20, 20);
+  Canvas2D.canvasContext.beginPath();
+  Canvas2D.canvasContext.arc(this.canvasPosition.x + 20, this.canvasPosition.y + 20, 10, 0,2*Math.PI);
+  Canvas2D.canvasContext.strokeStyle = this.color;
+  Canvas2D.canvasContext.fillStyle = this.color;
+  Canvas2D.canvasContext.stroke();
+  Canvas2D.canvasContext.fill();
+  //Canvas2D.canvasContext.fillRect(this.canvasPosition.x + 10, this.canvasPosition.y + 10, 20, 20);
   Canvas2D.canvasContext.font="14px Georgia";
   Canvas2D.canvasContext.fillStyle="white";
-  Canvas2D.canvasContext.fillText(this.tasks.length, this.canvasPosition.x + 15, this.canvasPosition.y + 22.5);
+  Canvas2D.canvasContext.fillText(this.tasks.length, this.canvasPosition.x + 15.5, this.canvasPosition.y + 24);
 };
 
 Vehicle.prototype.assignTask = function (data) {

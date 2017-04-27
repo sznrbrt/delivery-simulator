@@ -12,6 +12,8 @@ function SimulatorGameWorld() {
   ];
   this.clock = new Clock(23, 6);
   this.orderQueue = orderData;
+  this.frame = 0;
+  this.processedOrders = 0;
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -20,21 +22,22 @@ SimulatorGameWorld.prototype.handleInput = function (delta) {
 
 // Update method for SimulatorGameWorld
 SimulatorGameWorld.prototype.update = function (delta) {
-  this.time += ((1000 / 60) / 1000);
+  this.frame < 60 ? this.frame++ : this.frame = 0;
+  this.frame === 60 ? this.time++ : null;;
 
-  if(this.orderQueue.length > 0) {
-    this.orderQueue.filter((obj) => {
-      if(Math.floor(this.time) === obj.time) {
+  // console.log(this.time);
 
-        var randomRestaurantIndex = Math.floor(Math.random()*this.restaurants.length);
-        this.restaurants[0].addOrder(obj);
-        document.getElementById('processedOrderMeter').innerHTML = parseInt(document.getElementById('processedOrderMeter').innerHTML) + 1;
+  if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
+    let pulledOrderNumber = Math.floor(Math.random() * 3) + 1;
+    pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
+    var randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
 
-        return false;
-      }
-
-      return true;
-    })
+    for(let i = 0; i < pulledOrderNumber; i++) {
+      let order = this.orderQueue.shift();
+      this.restaurants[randomRestaurantIndex].addOrder(order);
+      this.processedOrders++;
+      document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
+    }
   }
 
   this.restaurants.forEach((restaurant) => restaurant.update());

@@ -1,3 +1,5 @@
+"use strict";
+
 var orderCoordinates = deliveryTargetCoordinates;
 // var orderCoordinates = [[5,2], [4,2], [4,8], [4,9], [4,10]];
 
@@ -8,14 +10,15 @@ var orderCoordinates = deliveryTargetCoordinates;
 //   { time: 7,  deliveryTo: { x: 5, y: 2 }, id: 3 },
 // ];
 
-var orderData = generateRandomOrders(200);
+var orderData = generateRandomOrders(50);
+
+console.log(orderData);
 
 function generateRandomOrders(quantity) {
   var orders = [];
   for(let i = 0; i < quantity; i++) {
-    let time = (i * 2) - 1;
     let _derliveryTo = chooseOneRandomly(orderCoordinates);
-    let order = { id: i, time: time, deliveryTo: { x: _derliveryTo[0], y: _derliveryTo[1]} };
+    let order = { id: i, deliveryTo: { x: _derliveryTo[0], y: _derliveryTo[1]} };
     orders.push(order);
   }
 
