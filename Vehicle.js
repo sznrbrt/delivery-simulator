@@ -25,6 +25,12 @@ Vehicle.prototype.update = function (delta) {
     this.followedPath = this.getShortestPath(this.position, this.tasks[0].deliveryTo);;
   }
 
+  if(this.tasks.length === 0 &&
+     this.position.x === this.restaurantPickupPosition.x &&
+     this.position.y === this.restaurantPickupPosition.y) {
+       Game.gameWorld.idleTimeUnit += (1/60);
+  }
+
   // Check if there is a task if so do, if not, go home
   if(this.tasks.length > 0) {
     // Movement for the task
@@ -32,8 +38,9 @@ Vehicle.prototype.update = function (delta) {
     if(this.canvasPosition.x === this.tasks[0].deliveryTo.x * 40 &&
        this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
          this.completedTasks.push(this.tasks[0]);
+         Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+         Game.gameWorld.completedOrders++;
          this.tasks.shift();
-         document.getElementById('completedTasksMeter').innerHTML = parseInt(document.getElementById('completedTasksMeter').innerHTML) + 1;
          this.simulatedTaskTime = 100;
       return;
     }
@@ -43,7 +50,8 @@ Vehicle.prototype.update = function (delta) {
     if(path.length === 0) {
       // Avoid error if next deliveryTarget is the same
       this.completedTasks.push(this.tasks[0]);
-      document.getElementById('completedTasksMeter').innerHTML = parseInt(document.getElementById('completedTasksMeter').innerHTML) + 1;
+      Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+      Game.gameWorld.completedOrders++;
       this.simulatedTaskTime = 50;
       this.tasks.shift();
       return;

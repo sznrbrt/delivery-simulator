@@ -1,20 +1,21 @@
 "use strict";
 
 function Clock() {
-  this.time = 39600;
+  // this.time = 660;
 }
 
 Clock.prototype.draw = function (time) {
-  function minutesToHm(d) {
-      d = Number(d);
+  // function minutesToHm(d) {
+  //     d = Number(d);
+  //
+  //     var h = Math.floor(d / 60);
+  //     // var m = Math.floor(d % 3600 / 60);
+  //     var m = Math.floor(d % 3600 % 60);
+  //
+  //     return `00${h}`.slice(-2) + ":" + `00${m}`.slice(-2);
+  // }
+  //
+  // var currentTime = minutesToHm(Math.round(this.time + time));
 
-      var h = Math.floor(d / 3600);
-      var s = Math.floor(d % 3600 % 60);
-
-      return `00${h}`.slice(-2) + ":" + `00${s}`.slice(-2);
-  }
-
-  var currentTime = minutesToHm(Math.round(this.time + time));
-
-  document.getElementById('time').innerHTML = currentTime;
+  document.getElementById('time').innerHTML = `T +${time}`;
 };

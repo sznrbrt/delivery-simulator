@@ -10,7 +10,7 @@ var orderCoordinates = deliveryTargetCoordinates;
 //   { time: 7,  deliveryTo: { x: 5, y: 2 }, id: 3 },
 // ];
 
-var orderData = generateRandomOrders(50);
+var orderData = generateRandomOrders(1000);
 
 console.log(orderData);
 
