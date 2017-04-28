@@ -51,9 +51,22 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
 
+  // SD
+  let squareDiffs = this.waitingTimes.map(function(value){
+    let diff = value - meanWaitingTime;
+    let sqr = diff * diff;
+    return sqr;
+  });
+
+
+  let avgSquareDiff = average(squareDiffs);
+
+  let stdDev = Math.sqrt(avgSquareDiff);
+
   document.getElementById('completedTasksMeter').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeter').innerHTML = Math.floor(this.idleTimeUnit);
   document.getElementById('meanWaitingTime').innerHTML = meanWaitingTime.toFixed(2);
+  document.getElementById('SDofWaitingTime').innerHTML = stdDev.toFixed(2);
 };
 
 // Draw method for SimulatorGameWorld
@@ -62,3 +75,12 @@ SimulatorGameWorld.prototype.draw = function () {
   this.city.draw();
   this.restaurants.forEach((restaurant) => restaurant.draw());
 };
+
+function average(data){
+  var sum = data.reduce(function(sum, value){
+    return sum + value;
+  }, 0);
+
+  var avg = data.length > 0 ? sum / data.length : 0;
+  return avg;
+}

@@ -25,19 +25,26 @@ body {
 .heading-container {
 	display: flex;
 	flex: 1;
-	flex-direction: row;
+	flex-direction: column;
 }
 
-.heading-container>div:first-of-type {
+.container-row>div:first-of-type {
 	margin-left: 0px;
 }
 
-.heading-container>div {
+.container-row>div {
 	margin-left: 20px;
 }
 
 #meanWaitingTime {
-	font-size: 16px;
-	font-weight: bold;
-	color: red;
+}
+
+.container-row {
+	height: auto;
+	display: flex;
+	flex-direction: row;
+}
+
+h4 {
+	margin: 0;
 }

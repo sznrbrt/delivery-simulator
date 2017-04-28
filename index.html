@@ -28,23 +28,30 @@
 <body>
 <div id="fixedwidth">
   <div class="heading-container">
-    <div>
-      <h4><span id="time"></span></h4>
+    <div class="container-row">
+      <div>
+        <h4><span id="time"></span></h4>
+      </div>
+      <div>
+        <h4># of completedTasks: <span id="completedTasksMeter">0</span></h4>
+      </div>
+      <div>
+        <h4># of processedOrders: <span id="processedOrderMeter">0</span></h4>
+      </div>
+      <div>
+        <h4># of riderDistanceUnits: <span id="distanceUnitMeter">0</span></h4>
+      </div>
     </div>
-    <div>
-      <h4># of completedTasks: <span id="completedTasksMeter">0</span></h4>
-    </div>
-    <div>
-      <h4># of processedOrders: <span id="processedOrderMeter">0</span></h4>
-    </div>
-    <div>
-      <h4># of riderDistanceUnits: <span id="distanceUnitMeter">0</span></h4>
-    </div>
-    <div>
-      <h6># of idleTimeUnits: <span id="idleTimeUnitMeter">0</span></h6>
-    </div>
-    <div>
-      <h6>meanWaitingTime: <span id="meanWaitingTime">0</span></h6>
+    <div class="container-row">
+      <div>
+        <h5># of idleTimeUnits: <span id="idleTimeUnitMeter">0</span></h5>
+      </div>
+      <div>
+        <h5>meanWaitingTime: <span id="meanWaitingTime">0</span></h5>
+      </div>
+      <div>
+        <h5>SDofWaitingTime: <span id="SDofWaitingTime">0</span></h5>
+      </div>
     </div>
   </div>
   <div id="canvas-container">
