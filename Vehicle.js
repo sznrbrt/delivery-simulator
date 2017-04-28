@@ -5,7 +5,7 @@ function Vehicle(_x, _y, resX, resY, color) {
   this.position = new Vector2(_x, _y);
   this.canvasPosition = new Vector2(_x * 40, _y * 40);
   this.restaurantPickupPosition = { x: resX, y: resY };
-  this.speed = 2.5;
+  this.speed = 5;
   this.tasks = [];
   this.completedTasks = [];
   this.followedPath = [];

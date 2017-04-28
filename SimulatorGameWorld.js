@@ -10,6 +10,7 @@ function SimulatorGameWorld() {
     new Restaurant(20, 1, 20, 2, 20, 2, 'orange', 2),
     new Restaurant(3, 8, 4, 8, 4, 8, 'green', 2),
   ];
+  this.busyScale = 0;
   this.clock = new Clock(23, 6);
   this.orderQueue = orderData;
   this.frame = 0;
@@ -27,12 +28,15 @@ SimulatorGameWorld.prototype.handleInput = function (delta) {
 // Update method for SimulatorGameWorld
 SimulatorGameWorld.prototype.update = function (delta) {
   this.frame < 60 ? this.frame++ : this.frame = 0;
-  this.frame === 60 ? this.time += (1 * this.multiplier) : null;;
+  this.frame === 60 || this.frame === 30 ? this.time += (1 * this.multiplier) : null;;
+
+  this.time % 100 === 0  && this.frame === 60? this.busyScale++ : null;
+  this.busyScale > 3 ? this.busyScale = 1 : null;
 
   // console.log(this.time);
 
   if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
-    let pulledOrderNumber = Math.floor(Math.random() * 4) + 1;
+    let pulledOrderNumber = Math.round(Math.random() * 3) + this.busyScale * 2;
     pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
     var randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
 
@@ -63,10 +67,26 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
   let stdDev = Math.sqrt(avgSquareDiff);
 
+  let period;
+  switch (this.busyScale) {
+    case 0:
+      period = 'Low demand'
+      break;
+    case 1:
+      period = 'Mid demand'
+      break;
+    case 2:
+      period = 'High demand'
+      break;
+    default:
+
+  }
+
   document.getElementById('completedTasksMeter').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeter').innerHTML = Math.floor(this.idleTimeUnit);
   document.getElementById('meanWaitingTime').innerHTML = meanWaitingTime.toFixed(2);
   document.getElementById('SDofWaitingTime').innerHTML = stdDev.toFixed(2);
+  document.getElementById('period').innerHTML = period;
 };
 
 // Draw method for SimulatorGameWorld

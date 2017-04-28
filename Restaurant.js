@@ -22,7 +22,7 @@ Restaurant.prototype.update = function (delta) {
   }
 
   this.vehicles.forEach((vehicle) => {
-    if(this.waitingOrders.length > 0 && vehicle.position.equals(this.pickupPosition)) {
+    if(this.waitingOrders.length > 0 && vehicle.position.equals(this.pickupPosition) && vehicle.tasks.length < 6) {
       vehicle.simulatedTaskTime = 100;
       vehicle.assignTask(this.waitingOrders[0]);
       this.waitingOrders.shift();
