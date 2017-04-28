@@ -54,6 +54,9 @@ SimulatorGameWorld.prototype.update = function (delta) {
   this.waitingTimes.length
 
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
+  let meanWaitingTimeForPeriod = this.waitingTimeslength > 100 ? this.waitingTimes
+    .slice(this.busyScale * (this.time / 100), this.busyScale * (this.time / 100) + 100)
+    .reduce((a, b) => a + b, 0) / 100 : meanWaitingTime;
 
   // SD
   let squareDiffs = this.waitingTimes.map(function(value){
@@ -87,6 +90,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
   document.getElementById('meanWaitingTime').innerHTML = meanWaitingTime.toFixed(2);
   document.getElementById('SDofWaitingTime').innerHTML = stdDev.toFixed(2);
   document.getElementById('period').innerHTML = period;
+  document.getElementById('meanWaitingTimeForPeriod').innerHTML = meanWaitingTimeForPeriod.toFixed(2);
 };
 
 // Draw method for SimulatorGameWorld
