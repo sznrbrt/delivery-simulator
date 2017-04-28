@@ -19,6 +19,7 @@ function SimulatorGameWorld() {
   this.idleTimeUnit = 1;
   this.completedOrders = 0;
   this.waitingTimes = [];
+  this.waitingTimesForCurrentPeriod = [];
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -30,7 +31,8 @@ SimulatorGameWorld.prototype.update = function (delta) {
   this.frame < 60 ? this.frame++ : this.frame = 0;
   this.frame === 60 || this.frame === 30 ? this.time += (1 * this.multiplier) : null;;
 
-  this.time % 100 === 0  && this.frame === 60? this.busyScale++ : null;
+  this.time % 100 === 0  && this.frame === 60 ? this.busyScale++ : null;
+  this.time % 100 === 0  && this.frame === 60 ? this.waitingTimesForCurrentPeriod = [] : null;
   this.busyScale > 3 ? this.busyScale = 1 : null;
 
   // console.log(this.time);
@@ -54,9 +56,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
   this.waitingTimes.length
 
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
-  let meanWaitingTimeForPeriod = this.waitingTimeslength > 100 ? this.waitingTimes
-    .slice(this.busyScale * (this.time / 100), this.busyScale * (this.time / 100) + 100)
-    .reduce((a, b) => a + b, 0) / 100 : meanWaitingTime;
+  let meanWaitingTimeForPeriod = this.waitingTimesForCurrentPeriod.reduce((a, b) => a + b, 0) / (this.waitingTimesForCurrentPeriod.length === 0 ? 1 : this.waitingTimesForCurrentPeriod.length);
 
   // SD
   let squareDiffs = this.waitingTimes.map(function(value){

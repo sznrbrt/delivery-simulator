@@ -25,7 +25,7 @@ Vehicle.prototype.update = function (delta) {
     this.followedPath = this.getShortestPath(this.position, this.tasks[0].deliveryTo);;
   }
 
-  if(this.tasks.length === 0 &&
+  if(this.simulatedTaskTime === 0 && this.tasks.length === 0 &&
      this.position.x === this.restaurantPickupPosition.x &&
      this.position.y === this.restaurantPickupPosition.y) {
        Game.gameWorld.idleTimeUnit += (1/60);
@@ -39,6 +39,7 @@ Vehicle.prototype.update = function (delta) {
        this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
          this.completedTasks.push(this.tasks[0]);
          Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+         Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
          Game.gameWorld.completedOrders++;
          this.tasks.shift();
          this.simulatedTaskTime = 100;
@@ -51,6 +52,7 @@ Vehicle.prototype.update = function (delta) {
       // Avoid error if next deliveryTarget is the same
       this.completedTasks.push(this.tasks[0]);
       Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+      Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
       Game.gameWorld.completedOrders++;
       this.simulatedTaskTime = 50;
       this.tasks.shift();
