@@ -40,10 +40,13 @@ SimulatorGameWorld.prototype.update = function (delta) {
   if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
     let pulledOrderNumber = Math.round(Math.random() * 3) + this.busyScale * 2;
     pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
-    var randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
 
     for(let i = 0; i < pulledOrderNumber; i++) {
+      let randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
+      console.log(randomRestaurantIndex);
+
       let order = this.orderQueue.shift();
+
       order.startTime = this.time;
       this.restaurants[randomRestaurantIndex].addOrder(order);
       this.processedOrders++;
