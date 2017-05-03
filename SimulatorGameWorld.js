@@ -43,11 +43,11 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
     for(let i = 0; i < pulledOrderNumber; i++) {
       let randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
-      console.log(randomRestaurantIndex);
-
       let order = this.orderQueue.shift();
 
       order.startTime = this.time;
+      order.pickupPosition = this.restaurants[randomRestaurantIndex].pickupPosition;
+
       this.restaurants[randomRestaurantIndex].addOrder(order);
       this.processedOrders++;
       document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
