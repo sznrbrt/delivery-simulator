@@ -12,7 +12,10 @@ var orderCoordinates = deliveryTargetCoordinates;
 
 var orderData = generateRandomOrders(1000);
 
-console.log(orderData);
+var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orderData, null, 4));
+var dlAnchorElem = document.getElementById('downloadAnchorElem');
+dlAnchorElem.setAttribute("href", dataStr);
+dlAnchorElem.setAttribute("download", "orderData.json");
 
 function generateRandomOrders(quantity) {
   var orders = [];
