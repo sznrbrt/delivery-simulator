@@ -5,10 +5,10 @@ function SimulatorGameWorld() {
   this.time = 0;
   this.city = new City();
   this.restaurants = [
-    new Restaurant(24, 5, 23, 5, 22, 2, 'red', 2),
-    new Restaurant(2, 3, 3, 3, 10, 2, 'blue', 3),
-    new Restaurant(20, 1, 20, 2, 20, 2, 'orange', 2),
-    new Restaurant(3, 8, 4, 8, 4, 8, 'green', 2),
+    new Restaurant(24, 5, 23, 5, 'red'),
+    new Restaurant(2, 3, 3, 3, 'blue'),
+    new Restaurant(20, 1, 20, 2, 'orange'),
+    new Restaurant(3, 8, 4, 8, 'green')
   ];
   this.busyScale = 0;
   this.clock = new Clock(23, 6);
@@ -18,6 +18,7 @@ function SimulatorGameWorld() {
   this.multiplier = 1;
   this.idleTimeUnit = 1;
   this.completedOrders = 0;
+  this.fleetManagementSystem = new FleetManagementSystem(16),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
 }
@@ -35,28 +36,26 @@ SimulatorGameWorld.prototype.update = function (delta) {
   this.time % 100 === 0  && this.frame === 60 ? this.waitingTimesForCurrentPeriod = [] : null;
   this.busyScale > 3 ? this.busyScale = 1 : null;
 
-  // console.log(this.time);
-
   if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
     let pulledOrderNumber = Math.round(Math.random() * 3) + this.busyScale * 2;
     pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
 
     for(let i = 0; i < pulledOrderNumber; i++) {
-      let randomRestaurantIndex =   Math.floor(Math.random()*this.restaurants.length);
+      let randomRestaurantIndex =   Math.floor(Math.random() * this.restaurants.length);
       let order = this.orderQueue.shift();
 
       order.startTime = this.time;
       order.pickupPosition = this.restaurants[randomRestaurantIndex].pickupPosition;
 
       this.restaurants[randomRestaurantIndex].addOrder(order);
+      this.fleetManagementSystem.addOrder(order);
       this.processedOrders++;
       document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
     }
   }
 
+  this.fleetManagementSystem.update();
   this.restaurants.forEach((restaurant) => restaurant.update());
-
-  this.waitingTimes.length
 
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
   let meanWaitingTimeForPeriod = this.waitingTimesForCurrentPeriod.reduce((a, b) => a + b, 0) / (this.waitingTimesForCurrentPeriod.length === 0 ? 1 : this.waitingTimesForCurrentPeriod.length);
@@ -101,6 +100,7 @@ SimulatorGameWorld.prototype.draw = function () {
   this.clock.draw(this.time);
   this.city.draw();
   this.restaurants.forEach((restaurant) => restaurant.draw());
+  this.fleetManagementSystem.draw();
 };
 
 function average(data){
