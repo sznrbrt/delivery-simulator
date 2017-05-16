@@ -33,9 +33,13 @@ FleetVehicle.prototype.update = function (delta) {
        this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
          this.position = new Vector2(this.tasks[0].deliveryTo.x, this.tasks[0].deliveryTo.y);
          this.completedTasks.push(this.tasks[0]);
-         Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
-         Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
-         Game.gameWorld.completedOrders++;
+
+         if(this.tasks[0].type !== 'PICKUP') {
+           Game.gameWorld.completedOrders++;
+           Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+           Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
+         }
+
          this.tasks.shift();
          this.simulatedTaskTime = 100;
       return;
@@ -46,9 +50,11 @@ FleetVehicle.prototype.update = function (delta) {
     if(path.length === 0) {
       // Avoid error if next deliveryTarget is the same
       this.completedTasks.push(this.tasks[0]);
-      Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
-      Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
-      Game.gameWorld.completedOrders++;
+      if(this.tasks[0].type !== 'PICKUP') {
+        Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
+        Game.gameWorld.completedOrders++;
+        Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
+      }
       this.simulatedTaskTime = 50;
       this.tasks.shift();
       return;
@@ -83,7 +89,7 @@ FleetVehicle.prototype.update = function (delta) {
     // If no task, return
       Game.gameWorld.idleTimeUnit += (1/60);
       this.isBusy = false;
-      return console.log(`No task...`);;
+      return;
   }
 };
 

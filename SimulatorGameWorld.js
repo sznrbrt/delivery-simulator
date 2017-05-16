@@ -59,7 +59,6 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
   let meanWaitingTimeForPeriod = this.waitingTimesForCurrentPeriod.reduce((a, b) => a + b, 0) / (this.waitingTimesForCurrentPeriod.length === 0 ? 1 : this.waitingTimesForCurrentPeriod.length);
-
   // SD
   let squareDiffs = this.waitingTimes.map(function(value){
     let diff = value - meanWaitingTime;
