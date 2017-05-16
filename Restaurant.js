@@ -18,11 +18,13 @@ Restaurant.prototype.update = function (delta) {
 
 
   Game.gameWorld.fleetManagementSystem.fleetVehicles.forEach((vehicle) => {
-    if(this.waitingOrders.length > 0 && vehicle.position.equals(this.pickupPosition) && vehicle.tasks.length === 2) {
+    if(this.waitingOrders.length > 0 && vehicle.position.equals(this.pickupPosition)) {
       // Check if vehicle here for this task
-      if(this.waitingOrders[0].id === vehicle.tasks[0].id) {
-        this.closedOrders.push(this.waitingOrders[0]);
-        this.waitingOrders.shift();
+      if(vehicle.tasks.length === 1 && this.waitingOrders[0]) {
+        if(vehicle.tasks[0].id === this.waitingOrders[0].id) {
+          this.closedOrders.push(this.waitingOrders[0]);
+          this.waitingOrders.shift();
+        }
       }
     }
   })
