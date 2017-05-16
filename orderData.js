@@ -10,7 +10,7 @@ var orderCoordinates = deliveryTargetCoordinates;
 //   { time: 7,  deliveryTo: { x: 5, y: 2 }, id: 3 },
 // ];
 
-var orderData = generateRandomOrders(1000);
+var orderData = SampleOrderData;//generateRandomOrders(300);
 
 var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orderData, null, 4));
 var dlAnchorElem = document.getElementById('downloadAnchorElem');
