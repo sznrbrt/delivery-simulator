@@ -18,7 +18,7 @@ function SimulatorGameWorld() {
   this.multiplier = 1;
   this.idleTimeUnit = 1;
   this.completedOrders = 0;
-  this.fleetManagementSystem = new FleetManagementSystem(12),
+  this.fleetManagementSystem = new FleetManagementSystem(10),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
 }

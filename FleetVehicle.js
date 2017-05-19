@@ -14,6 +14,8 @@ function FleetVehicle(_x, _y) {
 
 FleetVehicle.prototype.update = function (delta) {
   // If there is simulatedTaskTime then wait
+  this.color = this.isBusy || this.simulatedTaskTime > 0 ? 'red' : 'green';
+
   if(this.simulatedTaskTime > 0) {
     this.simulatedTaskTime -= 1;
     return;
