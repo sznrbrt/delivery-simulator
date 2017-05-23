@@ -34,7 +34,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
   this.time % 100 === 0  && this.frame === 60 ? this.busyScale++ : null;
   this.time % 100 === 0  && this.frame === 60 ? this.waitingTimesForCurrentPeriod = [] : null;
-  this.busyScale > 2 ? this.busyScale = 1 : null;
+  this.busyScale > 2 ? this.busyScale = 0 : null;
 
   if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
     let pulledOrderNumber = Math.round(Math.random() * 3) + this.busyScale * 2;
@@ -83,7 +83,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
       period = 'High demand'
       break;
     default:
-
+      period = '?'
   }
 
   document.getElementById('completedTasksMeter').innerHTML = this.completedOrders;

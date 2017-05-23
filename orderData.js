@@ -12,6 +12,8 @@ var orderCoordinates = deliveryTargetCoordinates;
 
 var orderData = SampleOrderData;//generateRandomOrders(300);
 
+console.log(SampleOrderData);
+
 var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orderData, null, 4));
 var dlAnchorElem = document.getElementById('downloadAnchorElem');
 dlAnchorElem.setAttribute("href", dataStr);

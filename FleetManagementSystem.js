@@ -11,28 +11,47 @@ function FleetManagementSystem(numOfVehicles) {
 
 FleetManagementSystem.prototype.update = function () {
   if(this.openOrderQueue.length > 0 && this.openOrderQueue[0].pickupPosition) {
-    let freeVehicles = this.fleetVehicles.filter((v) => !v.isBusy);
+    let vehicles = this.fleetVehicles;
 
-    let distances = freeVehicles.map((v) => {
-      return this.getShortestPath(v.position, this.openOrderQueue[0].pickupPosition).length;
+    let distances = vehicles.map((v) => {
+      if(v.isBusy) return undefined;
+      else return this.getShortestPath(v.position, this.openOrderQueue[0].pickupPosition).length;
     });
 
-    let value = Math.min.apply( Math, distances );
-    
-    let closesDistanceIndex = distances.indexOf(value);
+    var idx = 0;
 
-    console.log(closesDistanceIndex);
+    var value = distances[0];
 
-    for(let i = 0; i < this.fleetVehicles.length; i++) {
-      let vehicle = this.fleetVehicles[i];
-      if(!vehicle.isBusy && this.openOrderQueue[0]) {
-        let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
-        let fullTask = this.openOrderQueue[0];
-        vehicle.assignTask([ pickUpTask, fullTask]);
-        this.openOrderQueue.shift();
-        break;
+    for(let i = 0; i < distances.length; i++) {
+      if(!value || value > distances[i]) {
+        value = distances[i];
+        idx = i;
       }
     }
+
+    console.log(distances);
+    console.log(idx);
+
+    if(!this.fleetVehicles[idx].isBusy) {
+      let vehicle = this.fleetVehicles[idx];
+
+      let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
+      let fullTask = this.openOrderQueue[0];
+
+      vehicle.assignTask([ pickUpTask, fullTask]);
+      this.openOrderQueue.shift();
+    }
+
+
+    // for(let i = 0; i < this.fleetVehicles.length; i++) {
+    //   let vehicle = this.fleetVehicles[i];
+    //   if(!vehicle.isBusy && this.openOrderQueue[0]) {
+    //     let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
+    //     let fullTask = this.openOrderQueue[0];
+    //     vehicle.assignTask([ pickUpTask, fullTask]);
+    //     this.openOrderQueue.shift();
+    //   }
+    // }
   }
 
   this.fleetVehicles.forEach((vehicle) => vehicle.update());
