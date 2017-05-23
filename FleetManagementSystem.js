@@ -13,27 +13,12 @@ FleetManagementSystem.prototype.update = function () {
   if(this.openOrderQueue.length > 0 && this.openOrderQueue[0].pickupPosition) {
     let vehicles = this.fleetVehicles;
 
-    let distances = vehicles.map((v) => {
-      if(v.isBusy) return undefined;
-      else return this.getShortestPath(v.position, this.openOrderQueue[0].pickupPosition).length;
-    });
+    let index = this.selectVehicle(this.fleetVehicles, this.openOrderQueue[0]);
 
-    var idx = 0;
+    console.log(index);
 
-    var value = distances[0];
-
-    for(let i = 0; i < distances.length; i++) {
-      if(!value || value > distances[i]) {
-        value = distances[i];
-        idx = i;
-      }
-    }
-
-    console.log(distances);
-    console.log(idx);
-
-    if(!this.fleetVehicles[idx].isBusy) {
-      let vehicle = this.fleetVehicles[idx];
+    if(index !== 'undefined') {
+      let vehicle = this.fleetVehicles[index];
 
       let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
       let fullTask = this.openOrderQueue[0];
@@ -41,17 +26,6 @@ FleetManagementSystem.prototype.update = function () {
       vehicle.assignTask([ pickUpTask, fullTask]);
       this.openOrderQueue.shift();
     }
-
-
-    // for(let i = 0; i < this.fleetVehicles.length; i++) {
-    //   let vehicle = this.fleetVehicles[i];
-    //   if(!vehicle.isBusy && this.openOrderQueue[0]) {
-    //     let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
-    //     let fullTask = this.openOrderQueue[0];
-    //     vehicle.assignTask([ pickUpTask, fullTask]);
-    //     this.openOrderQueue.shift();
-    //   }
-    // }
   }
 
   this.fleetVehicles.forEach((vehicle) => vehicle.update());
@@ -63,6 +37,26 @@ FleetManagementSystem.prototype.draw = function () {
 
 FleetManagementSystem.prototype.addOrder = function (data) {
   this.openOrderQueue = this.openOrderQueue.concat([data]);
+};
+
+FleetManagementSystem.prototype.selectVehicle = function (vehicles, task) {
+  let distances = vehicles.map((v) => {
+    if(v.isBusy) return undefined;
+    else return this.getShortestPath(v.position, task.pickupPosition).length;
+  });
+
+  var idx = 0;
+
+  var value = distances[0];
+
+  for(let i = 0; i < distances.length; i++) {
+    if(!value || value > distances[i]) {
+      value = distances[i];
+      idx = i;
+    }
+  }
+
+  return vehicles[idx].isBusy ? undefined : idx;
 };
 
 FleetManagementSystem.prototype.getShortestPath = function (a, b) {
