@@ -17,7 +17,7 @@ FleetManagementSystem.prototype.update = function () {
 
     console.log(index);
 
-    if(index !== 'undefined') {
+    if(index !== undefined) {
       let vehicle = this.fleetVehicles[index];
 
       let pickUpTask = { type: 'PICKUP', deliveryTo: this.openOrderQueue[0].pickupPosition};
