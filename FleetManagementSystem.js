@@ -15,8 +15,6 @@ FleetManagementSystem.prototype.update = function () {
 
     let index = this.selectVehicle(this.fleetVehicles, this.openOrderQueue[0]);
 
-    console.log(index);
-
     if(index !== undefined) {
       let vehicle = this.fleetVehicles[index];
 

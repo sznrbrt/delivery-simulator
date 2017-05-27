@@ -154,8 +154,4 @@ Vehicle.prototype.getShortestPath = function (a, b) {
 function getMapIndex(coord) {
   var index = coord.x + ((coord.y * 25));
   return index;
-  // idx1 = 0 * 0
-  // idx2 = 1 * 0
-  // idx3 = 2 * 0
-  // idx25 = 0 * 1
 }
