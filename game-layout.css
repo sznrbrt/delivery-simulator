@@ -2,17 +2,30 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 #fixedwidth {
-	width:1024px;
-	margin:0 auto;
+	margin:0;
 	padding 0;
+	display: flex;
+	flex: 1;
 }
 
 #canvas-container {
-	margin: 0 auto;
-	padding 0;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex: 2;
+}
+
+#stat-container {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex: 1;
+	background-color: cornsilk;
 }
 
 #mycanvas{
@@ -42,7 +55,7 @@ body {
 .container-row {
 	height: auto;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 h4 {
