@@ -34,40 +34,106 @@
     <canvas id="mycanvas" width="1000" height="600"></canvas>
   </div>
   <div id="stat-container">
-    <div class="heading-container">
-      <div class="container-row">
-        <div>
-          <h4><span id="time"></span></h4>
-        </div>
-        <div>
-          <h4># of completedTasks: <span id="completedTasksMeter">0</span></h4>
-        </div>
-        <div>
-          <h4># of processedOrders: <span id="processedOrderMeter">0</span></h4>
-        </div>
-        <div>
-          <h4># of riderDistanceUnits: <span id="distanceUnitMeter">0</span></h4>
-        </div>
+    <div class="stat-container-top">
+      <div>
+        <h4><span id="time"></span></h4>
       </div>
-      <div class="container-row">
-        <div>
-          <h5># of idleTimeUnits: <span id="idleTimeUnitMeter">0</span></h5>
-        </div>
-        <div>
-          <h5>meanWaitingTime: <span id="meanWaitingTime">0</span></h5>
-        </div>
-        <div>
-          <h5>meanWaitingTimeForPeriod: <span id="meanWaitingTimeForPeriod">0</span></h5>
-        </div>
-        <div>
-          <h5>SDofWaitingTime: <span id="SDofWaitingTime">0</span></h5>
-        </div>
-        <div>
-          <h5>Period: <span id="period"></span></h5>
-        </div>
-        <div style="display:flex; align-items: center; justify-content: center">
-          <a id="downloadAnchorElem" style="">Download data</a>
-        </div>
+      <div>
+        <h5>Shared fleet</h5>
+      </div>
+      <div>
+        <h5>Single fleet</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5>Period</h4>
+      </div>
+      <div style="flex: 2; border-left: none">
+        <h5><span id="period"></span></h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5># of processedOrders:</h4>
+      </div>
+      <div>
+        <h5><span id="processedOrderMeter">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5># of completedTasks:</h4>
+      </div>
+      <div>
+        <h5><span id="completedTasksMeter">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5># of riderDistanceUnits:</h4>
+      </div>
+      <div>
+        <h5><span id="distanceUnitMeter">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5># of idleTimeUnits:</h4>
+      </div>
+      <div>
+        <h5><span id="idleTimeUnitMeter">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5>meanWaitingTime:</h4>
+      </div>
+      <div>
+        <h5><span id="meanWaitingTime">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h6>meanWaitingTimeForPeriod:</h6>
+      </div>
+      <div>
+        <h5><span id="meanWaitingTimeForPeriod">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+    <div class="stat-container-row">
+      <div>
+        <h5>SDofWaitingTime:</h4>
+      </div>
+      <div>
+        <h5><span id="SDofWaitingTime">0</span></h5>
+      </div>
+      <div>
+        <h5>20</h5>
+      </div>
+    </div>
+
+    <div class="container-row">
+      <div style="display:flex; align-items: center; justify-content: center">
+        <a id="downloadAnchorElem" style="">Download data</a>
       </div>
     </div>
   </div>
