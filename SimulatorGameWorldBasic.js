@@ -33,6 +33,9 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
 
 // Draw method for SimulatorGameWorldBasic
 SimulatorGameWorldBasic.prototype.draw = function () {
+  this.clock.draw(this.time);
+  this.city.draw();
+  this.restaurants.forEach((restaurant) => restaurant.draw());
 };
 
 function average(data){

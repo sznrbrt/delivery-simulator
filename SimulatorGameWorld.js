@@ -21,6 +21,7 @@ function SimulatorGameWorld() {
   this.fleetManagementSystem = new FleetManagementSystem(10),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
+  this.restaurantLog = 0;
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -37,19 +38,19 @@ SimulatorGameWorld.prototype.update = function (delta) {
   this.busyScale > 2 ? this.busyScale = 0 : null;
 
   if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
-    let pulledOrderNumber = Math.round(Math.random() * 3) + this.busyScale * 2;
+    let pulledOrderNumber = 1 + this.busyScale * 2;
     pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
 
     for(let i = 0; i < pulledOrderNumber; i++) {
-      let randomRestaurantIndex =   Math.floor(Math.random() * this.restaurants.length);
       let order = this.orderQueue.shift();
-
+      console.log(this.restaurantLog);
       order.startTime = this.time;
-      order.pickupPosition = this.restaurants[randomRestaurantIndex].pickupPosition;
+      order.pickupPosition = this.restaurants[this.restaurantLog].pickupPosition;
 
-      this.restaurants[randomRestaurantIndex].addOrder(order);
+      this.restaurants[this.restaurantLog].addOrder(order);
       this.fleetManagementSystem.addOrder(order);
       this.processedOrders++;
+      this.restaurantLog === this.restaurants.length - 1 ?  this.restaurantLog = 0 : this.restaurantLog++;
       document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
     }
   }
