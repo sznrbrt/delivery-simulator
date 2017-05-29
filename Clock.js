@@ -1,7 +1,6 @@
 "use strict";
 
 function Clock() {
-  // this.time = 660;
 }
 
 Clock.prototype.draw = function (time) {

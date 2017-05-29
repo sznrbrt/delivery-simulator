@@ -14,4 +14,5 @@ Game.loadAssets = function () {
 // Initalizes the game by setting the
 Game.initialize = function () {
     Game.gameWorld = new SimulatorGameWorld();
+    Game.gameWorldBasic = new SimulatorGameWorldBasic();
 };

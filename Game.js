@@ -17,6 +17,8 @@ function Game_Singleton() {
     this._size = null;
     this._spritesStillLoading = 0;
     this.gameWorld = null;
+    this.gameWorldBasic = null;
+    this.gameWorldInFocus = 0;
 }
 
 // returns the size of the game field
@@ -69,8 +71,10 @@ Game_Singleton.prototype.assetLoadingLoop = function () {
 Game_Singleton.prototype.mainLoop = function (delta) {
     var delta = 1 / 60;
     Game.gameWorld.update(delta);
+    Game.gameWorldBasic.update(delta);
     Canvas2D.clear();
-    Game.gameWorld.draw();
+    console.log(Game.gameWorldInFocus);
+    Game.gameWorldInFocus === 0 ? Game.gameWorld.draw() : Game.gameWorldBasic.draw();
     requestAnimationFrame(Game.mainLoop);
 };
 

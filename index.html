@@ -7,7 +7,7 @@
     <script src="LAB.min.js"></script>
     <script>
 
-    //Loads the scripts with the LAB script loader and calls the start() function
+    // Loads the scripts with the LAB script loader and calls the start() function
         $LAB
                 .script('geom/Vector2.js').wait()
                 .script('data.js').wait()
@@ -22,9 +22,11 @@
                 .script('FleetManagementSystem.js').wait()
                 .script('Restaurant.js').wait()
                 .script('SimulatorGameWorld.js').wait()
+                .script('SimulatorGameWorldBasic.js').wait()
                 .script('TrafficSimulator.js').wait(function () {
                     Game.start('mycanvas', 1000, 600);
                 });
+
     </script>
 </head>
 
@@ -34,6 +36,16 @@
     <canvas id="mycanvas" width="1000" height="600"></canvas>
   </div>
   <div id="stat-container">
+    <div class="stat-container-top">
+      <div>
+      </div>
+      <div class="world-changer-button" id="change-to-fleetWorld">
+        ▶️
+      </div>
+      <div class="world-changer-button" id="change-to-basicWorld">
+        ▶️
+      </div>
+    </div>
     <div class="stat-container-top">
       <div>
         <h4><span id="time"></span></h4>
@@ -139,4 +151,12 @@
   </div>
 </div>
 </body>
+<script>
+  document.getElementById("change-to-basicWorld").addEventListener("click", () => {
+    Game.gameWorldInFocus = 1;
+  });
+  document.getElementById("change-to-fleetWorld").addEventListener("click", () => {
+    Game.gameWorldInFocus = 0;
+  });
+</script>
 </html>
