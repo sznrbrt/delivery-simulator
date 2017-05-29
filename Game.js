@@ -73,7 +73,6 @@ Game_Singleton.prototype.mainLoop = function (delta) {
     Game.gameWorld.update(delta);
     Game.gameWorldBasic.update(delta);
     Canvas2D.clear();
-    console.log(Game.gameWorldInFocus);
     Game.gameWorldInFocus === 0 ? Game.gameWorld.draw() : Game.gameWorldBasic.draw();
     requestAnimationFrame(Game.mainLoop);
 };

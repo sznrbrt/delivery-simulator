@@ -5,10 +5,10 @@ function SimulatorGameWorldBasic() {
   this.time = 0;
   this.city = new City();
   this.restaurants = [
-    new Restaurant(24, 5, 23, 5, 'red'),
-    new Restaurant(2, 3, 3, 3, 'blue'),
-    new Restaurant(20, 1, 20, 2, 'orange'),
-    new Restaurant(3, 8, 4, 8, 'green')
+    new RestaurantBasic(24, 5, 23, 5, 22, 2, 'red', 4),
+    new RestaurantBasic(2, 3, 3, 3, 10, 2, 'blue', 4),
+    new RestaurantBasic(20, 1, 20, 2, 20, 2, 'orange', 4),
+    new RestaurantBasic(3, 8, 4, 8, 4, 8, 'green', 4),
   ];
   this.busyScale = 0;
   this.clock = new Clock(23, 6);
@@ -21,6 +21,7 @@ function SimulatorGameWorldBasic() {
   this.fleetManagementSystem = new FleetManagementSystem(10),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
+  this.restaurantLog = 0;
 }
 
 // Handles input for the SimulatorGameWorldBasic - input handling for the buttons
@@ -29,6 +30,35 @@ SimulatorGameWorldBasic.prototype.handleInput = function (delta) {
 
 // Update method for SimulatorGameWorldBasic
 SimulatorGameWorldBasic.prototype.update = function (delta) {
+  this.frame < 60 ? this.frame++ : this.frame = 0;
+  this.frame === 60 || this.frame === 30 ? this.time += (1 * this.multiplier) : null;;
+
+  this.time % 100 === 0  && this.frame === 60 ? this.busyScale++ : null;
+  this.time % 100 === 0  && this.frame === 60 ? this.waitingTimesForCurrentPeriod = [] : null;
+  this.busyScale > 2 ? this.busyScale = 0 : null;
+
+  if(this.time % 3 === 0 && this.frame === 60 && this.orderQueue.length > 0) {
+    let pulledOrderNumber = 1 + this.busyScale * 2;
+    pulledOrderNumber < this.orderQueue.length ? null : pulledOrderNumber = this.orderQueue.length;
+
+    for(let i = 0; i < pulledOrderNumber; i++) {
+      let order = this.orderQueue.shift();
+      order.startTime = this.time;
+      order.pickupPosition = this.restaurants[this.restaurantLog].pickupPosition;
+
+      for(let i = 0; i < pulledOrderNumber; i++) {
+        let order = this.orderQueue.shift();
+        order.startTime = this.time;
+        this.restaurants[this.restaurantLog].addOrder(order);
+        this.restaurantLog === this.restaurants.length - 1 ?  this.restaurantLog = 0 : this.restaurantLog++;
+        // this.processedOrders++;
+        // document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
+      }
+    }
+  }
+
+  this.restaurants.forEach((restaurant) => restaurant.update());
+
 };
 
 // Draw method for SimulatorGameWorldBasic

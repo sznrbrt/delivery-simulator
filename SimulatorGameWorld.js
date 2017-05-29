@@ -43,7 +43,6 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
     for(let i = 0; i < pulledOrderNumber; i++) {
       let order = this.orderQueue.shift();
-      console.log(this.restaurantLog);
       order.startTime = this.time;
       order.pickupPosition = this.restaurants[this.restaurantLog].pickupPosition;
 
