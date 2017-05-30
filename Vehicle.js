@@ -28,7 +28,7 @@ Vehicle.prototype.update = function (delta) {
   if(this.simulatedTaskTime === 0 && this.tasks.length === 0 &&
      this.position.x === this.restaurantPickupPosition.x &&
      this.position.y === this.restaurantPickupPosition.y) {
-       Game.gameWorld.idleTimeUnit += (1/60);
+       Game.gameWorldBasic.idleTimeUnit += (1/60);
   }
 
   // Check if there is a task if so do, if not, go home
@@ -38,9 +38,9 @@ Vehicle.prototype.update = function (delta) {
     if(this.canvasPosition.x === this.tasks[0].deliveryTo.x * 40 &&
        this.canvasPosition.y === this.tasks[0].deliveryTo.y * 40 ) {
          this.completedTasks.push(this.tasks[0]);
-         Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
-         Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
-         Game.gameWorld.completedOrders++;
+         Game.gameWorldBasic.waitingTimes.push(Game.gameWorldBasic.time - this.tasks[0].startTime);
+         Game.gameWorldBasic.waitingTimesForCurrentPeriod.push(Game.gameWorldBasic.time - this.tasks[0].startTime);
+         Game.gameWorldBasic.completedOrders++;
          this.tasks.shift();
          this.simulatedTaskTime = 100;
       return;
@@ -51,9 +51,9 @@ Vehicle.prototype.update = function (delta) {
     if(path.length === 0) {
       // Avoid error if next deliveryTarget is the same
       this.completedTasks.push(this.tasks[0]);
-      Game.gameWorld.waitingTimes.push(Game.gameWorld.time - this.tasks[0].startTime);
-      Game.gameWorld.waitingTimesForCurrentPeriod.push(Game.gameWorld.time - this.tasks[0].startTime);
-      Game.gameWorld.completedOrders++;
+      Game.gameWorldBasic.waitingTimes.push(Game.gameWorldBasic.time - this.tasks[0].startTime);
+      Game.gameWorldBasic.waitingTimesForCurrentPeriod.push(Game.gameWorldBasic.time - this.tasks[0].startTime);
+      Game.gameWorldBasic.completedOrders++;
       this.simulatedTaskTime = 50;
       this.tasks.shift();
       return;
@@ -67,17 +67,17 @@ Vehicle.prototype.update = function (delta) {
       this.position = new Vector2(targetX, targetY);
       if(this.followedPath.length === 1) return;
       this.followedPath.shift(); // If reached get next target
-      document.getElementById('distanceUnitMeter').innerHTML = parseInt(document.getElementById('distanceUnitMeter').innerHTML) + 1;
+      document.getElementById('distanceUnitMeterBasic').innerHTML = parseInt(document.getElementById('distanceUnitMeterBasic').innerHTML) + 1;
     } else {
       // Not equals
       // If X not equals move horizontally, else vertically
       if(targetX * 40 !== this.canvasPosition.x) {
         //Move horizontally
-        if((targetX * 40 - this.canvasPosition.x) < 0) this.canvasPosition.x -= (this.speed * Game.gameWorld.multiplier);
+        if((targetX * 40 - this.canvasPosition.x) < 0) this.canvasPosition.x -= (this.speed * Game.gameWorldBasic.multiplier);
         else this.canvasPosition.x += this.speed;
       } else if(targetY * 40 !== this.canvasPosition.y) {
         //Move vertically
-        if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += (this.speed * Game.gameWorld.multiplier);
+        if(targetY * 40 - this.canvasPosition.y > 0) this.canvasPosition.y += (this.speed * Game.gameWorldBasic.multiplier);
         else this.canvasPosition.y -= this.speed;
       } else {
         console.log('WHERE?');
@@ -88,7 +88,7 @@ Vehicle.prototype.update = function (delta) {
     // Check if home - if so, return
     if(this.canvasPosition.x === this.restaurantPickupPosition.x &&
        this.canvasPosition.y === this.restaurantPickupPosition.y ) {
-      return;
+         return;
     }
     // Movement for going home
     var path = this.followedPath.length === 0 ? this.getShortestPath(this.position, this.restaurantPickupPosition) : this.followedPath;
@@ -101,7 +101,7 @@ Vehicle.prototype.update = function (delta) {
       this.position = new Vector2(targetX, targetY);
       if(this.followedPath.length === 1) return this.followedPath = [];
       this.followedPath.shift(); // If reached get next target
-      document.getElementById('distanceUnitMeter').innerHTML = parseInt(document.getElementById('distanceUnitMeter').innerHTML) + 1;
+      // document.getElementById('distanceUnitMeterBasic').innerHTML = parseInt(document.getElementById('distanceUnitMeterBasic').innerHTML) + 1;
     } else {
       // Not equals
       // If X not equals move horizontally, else vertically

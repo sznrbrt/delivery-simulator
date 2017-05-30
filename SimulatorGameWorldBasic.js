@@ -45,20 +45,17 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
       let order = this.orderQueue.shift();
       order.startTime = this.time;
       order.pickupPosition = this.restaurants[this.restaurantLog].pickupPosition;
-
-      for(let i = 0; i < pulledOrderNumber; i++) {
-        let order = this.orderQueue.shift();
-        order.startTime = this.time;
-        this.restaurants[this.restaurantLog].addOrder(order);
-        this.restaurantLog === this.restaurants.length - 1 ?  this.restaurantLog = 0 : this.restaurantLog++;
-        // this.processedOrders++;
-        // document.getElementById('processedOrderMeter').innerHTML = this.processedOrders;
-      }
+      this.restaurants[this.restaurantLog].addOrder(order);
+      this.restaurantLog === this.restaurants.length - 1 ?  this.restaurantLog = 0 : this.restaurantLog++;
+      this.processedOrders++;
+      document.getElementById('processedOrderMeterBasic').innerHTML = this.processedOrders;
     }
   }
 
   this.restaurants.forEach((restaurant) => restaurant.update());
 
+  document.getElementById('completedTasksMeterBasic').innerHTML = this.completedOrders;
+  document.getElementById('idleTimeUnitMeterBasic').innerHTML = Math.floor(this.idleTimeUnit);
 };
 
 // Draw method for SimulatorGameWorldBasic
