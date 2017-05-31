@@ -54,8 +54,26 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
 
   this.restaurants.forEach((restaurant) => restaurant.update());
 
+  let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
+  let meanWaitingTimeForPeriod = this.waitingTimesForCurrentPeriod.reduce((a, b) => a + b, 0) / (this.waitingTimesForCurrentPeriod.length === 0 ? 1 : this.waitingTimesForCurrentPeriod.length);
+
+  // SD
+  let squareDiffs = this.waitingTimes.map(function(value){
+    let diff = value - meanWaitingTime;
+    let sqr = diff * diff;
+    return sqr;
+  });
+
+
+  let avgSquareDiff = average(squareDiffs);
+
+  let stdDev = Math.sqrt(avgSquareDiff);
+
   document.getElementById('completedTasksMeterBasic').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeterBasic').innerHTML = Math.floor(this.idleTimeUnit);
+  document.getElementById('meanWaitingTimeBasic').innerHTML = meanWaitingTime.toFixed(2);
+  document.getElementById('meanWaitingTimeForPeriodBasic').innerHTML = meanWaitingTimeForPeriod.toFixed(2);
+  document.getElementById('SDofWaitingTimeBasic').innerHTML = stdDev.toFixed(2);
 };
 
 // Draw method for SimulatorGameWorldBasic
