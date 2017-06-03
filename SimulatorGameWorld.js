@@ -87,6 +87,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
       period = '?'
   }
 
+  document.getElementById('totalNumOfVehicles').innerHTML = this.fleetManagementSystem.fleetVehicles.length;
   document.getElementById('completedTasksMeter').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeter').innerHTML = Math.floor(this.idleTimeUnit);
   document.getElementById('percentageOfIdleDrivers').innerHTML = this.idleDriverPercentage.toFixed(2) * 100 + '%';

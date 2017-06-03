@@ -74,6 +74,7 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
 
   let stdDev = Math.sqrt(avgSquareDiff);
 
+  document.getElementById('totalNumOfVehiclesBasic').innerHTML = totalNumOfVehicles;
   document.getElementById('completedTasksMeterBasic').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeterBasic').innerHTML = Math.floor(this.idleTimeUnit);
   document.getElementById('percentageOfIdleDriversBasic').innerHTML = idleDriverPercentage.toFixed(2) * 100 + '%';
