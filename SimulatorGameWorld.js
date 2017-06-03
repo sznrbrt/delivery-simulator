@@ -18,10 +18,11 @@ function SimulatorGameWorld() {
   this.multiplier = 1;
   this.idleTimeUnit = 1;
   this.completedOrders = 0;
-  this.fleetManagementSystem = new FleetManagementSystem(10),
+  this.fleetManagementSystem = new FleetManagementSystem(12),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
   this.restaurantLog = 0;
+  this.idleDriverPercentage = 0;
 }
 
 // Handles input for the SimulatorGameWorld - input handling for the buttons
@@ -88,6 +89,7 @@ SimulatorGameWorld.prototype.update = function (delta) {
 
   document.getElementById('completedTasksMeter').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeter').innerHTML = Math.floor(this.idleTimeUnit);
+  document.getElementById('percentageOfIdleDrivers').innerHTML = this.idleDriverPercentage.toFixed(2) * 100 + '%';
   document.getElementById('meanWaitingTime').innerHTML = meanWaitingTime.toFixed(2);
   document.getElementById('SDofWaitingTime').innerHTML = stdDev.toFixed(2);
   document.getElementById('period').innerHTML = period;

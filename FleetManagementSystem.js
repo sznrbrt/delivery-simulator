@@ -26,7 +26,11 @@ FleetManagementSystem.prototype.update = function () {
     }
   }
 
+
   this.fleetVehicles.forEach((vehicle) => vehicle.update());
+
+  let percentageOfIdleDrivers = this.fleetVehicles.filter((vehicle) => !vehicle.isBusy).length / this.fleetVehicles.length;
+  Game.gameWorld.idleDriverPercentage = percentageOfIdleDrivers;
 };
 
 FleetManagementSystem.prototype.draw = function () {
