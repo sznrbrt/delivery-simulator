@@ -10,6 +10,7 @@ function Vehicle(_x, _y, resX, resY, color) {
   this.completedTasks = [];
   this.followedPath = [];
   this.simulatedTaskTime = 0;
+  this.isBusy = false;
 }
 
 Vehicle.prototype.update = function (delta) {
@@ -29,6 +30,9 @@ Vehicle.prototype.update = function (delta) {
      this.position.x === this.restaurantPickupPosition.x &&
      this.position.y === this.restaurantPickupPosition.y) {
        Game.gameWorldBasic.idleTimeUnit += (1/60);
+       this.isBusy = true;
+  } else {
+    this.isBusy = false;
   }
 
   // Check if there is a task if so do, if not, go home

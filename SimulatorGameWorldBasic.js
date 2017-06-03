@@ -54,6 +54,11 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
 
   this.restaurants.forEach((restaurant) => restaurant.update());
 
+  let numOfIdleVehiclesPerRestaurant = this.restaurants.map((restaurant) => restaurant.vehicles.filter((v) => v.isBusy).length);
+  let totalNumOfVehicles = this.restaurants.map((restaurant) => restaurant.vehicles.length).reduce((a,b) => a+b);
+  let totalNumOfIdleVehicles = numOfIdleVehiclesPerRestaurant.reduce((a,b) => a + b, 0);
+  let idleDriverPercentage = totalNumOfIdleVehicles / totalNumOfVehicles;
+
   let meanWaitingTime = this.waitingTimes.reduce((a, b) => a + b, 0) / (this.waitingTimes.length === 0 ? 1 : this.waitingTimes.length);
   let meanWaitingTimeForPeriod = this.waitingTimesForCurrentPeriod.reduce((a, b) => a + b, 0) / (this.waitingTimesForCurrentPeriod.length === 0 ? 1 : this.waitingTimesForCurrentPeriod.length);
 
@@ -71,6 +76,7 @@ SimulatorGameWorldBasic.prototype.update = function (delta) {
 
   document.getElementById('completedTasksMeterBasic').innerHTML = this.completedOrders;
   document.getElementById('idleTimeUnitMeterBasic').innerHTML = Math.floor(this.idleTimeUnit);
+  document.getElementById('percentageOfIdleDriversBasic').innerHTML = idleDriverPercentage.toFixed(2) * 100 + '%';
   document.getElementById('meanWaitingTimeBasic').innerHTML = meanWaitingTime.toFixed(2);
   document.getElementById('meanWaitingTimeForPeriodBasic').innerHTML = meanWaitingTimeForPeriod.toFixed(2);
   document.getElementById('SDofWaitingTimeBasic').innerHTML = stdDev.toFixed(2);
