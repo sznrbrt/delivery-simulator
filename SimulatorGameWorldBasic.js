@@ -9,6 +9,7 @@ function SimulatorGameWorldBasic() {
     new RestaurantBasic(2, 3, 3, 3, 10, 2, 'blue', 4),
     new RestaurantBasic(20, 1, 20, 2, 20, 2, 'orange', 4),
     new RestaurantBasic(3, 8, 4, 8, 4, 8, 'green', 4),
+    new RestaurantBasic(19, 7, 18, 7, 18, 7, 'lightblue', 4)
   ];
   this.busyScale = 0;
   this.clock = new Clock(23, 6);

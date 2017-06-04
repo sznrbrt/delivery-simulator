@@ -8,7 +8,8 @@ function SimulatorGameWorld() {
     new Restaurant(24, 5, 23, 5, 'red'),
     new Restaurant(2, 3, 3, 3, 'blue'),
     new Restaurant(20, 1, 20, 2, 'orange'),
-    new Restaurant(3, 8, 4, 8, 'green')
+    new Restaurant(3, 8, 4, 8, 'green'),
+    new Restaurant(19, 7, 18, 7, 'lightblue')
   ];
   this.busyScale = 0;
   this.clock = new Clock(23, 6);
@@ -18,7 +19,7 @@ function SimulatorGameWorld() {
   this.multiplier = 1;
   this.idleTimeUnit = 1;
   this.completedOrders = 0;
-  this.fleetManagementSystem = new FleetManagementSystem(12),
+  this.fleetManagementSystem = new FleetManagementSystem(20),
   this.waitingTimes = [];
   this.waitingTimesForCurrentPeriod = [];
   this.restaurantLog = 0;
